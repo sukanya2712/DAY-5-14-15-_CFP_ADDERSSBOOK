@@ -1,19 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace AddressBook
 {
     public class Contact
     {
-        string name;
-        string email;
-        string phone;
-        string state;
-        string city;
-        string zipcode;
+        public string name;
+        public string email;
+        public string phone;
+        public string state;
+        public string city;
+        public string zipcode;
 
         public Contact(string name, string email, string phone, string state, string city, string zipcode)
         {
@@ -24,5 +27,10 @@ namespace AddressBook
             this.city = city;
             this.zipcode = zipcode;
         }
+        public override string ToString()
+        {
+            return $"Name: {name}\nEmail: {email}\nPhone: {phone}\nState: {state}\nCity: {city}\nZip: {zipcode}";
+        }
+
     }
 }
