@@ -22,13 +22,13 @@ namespace AddressBook
         public Contact(string name, string email, string phone, string state, string city, string zipcode)
         {
             if (!IsValidEmail(email))
-                throw new ArgumentException("Invalid email address");
+                throw new ArgumentException(" Invalid email address");
 
             if (!IsValidPhone(phone))
-                throw new ArgumentException("Invalid phone number");
+                throw new ArgumentException(" Invalid phone number");
 
             if (!IsValidZipcode(zipcode))
-                throw new ArgumentException("Invalid ZIP code");
+                throw new ArgumentException(" Invalid ZIP code");
 
             this.name = name;
             this.email = email;
