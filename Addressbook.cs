@@ -10,7 +10,8 @@ namespace AddressBook
     internal class Addressbook
     {
         List<Contact> contactList = new List<Contact>();
-        public void addContact()
+
+        public bool AddContact()
         {
             Console.WriteLine("Enter name");
             string? name = Console.ReadLine();
@@ -25,93 +26,77 @@ namespace AddressBook
             Console.WriteLine("Enter zip");
             string? zip = Console.ReadLine();
             Contact contact = new Contact(name, email, phone, state, city, zip);
-            /*if (contactList.Contains(contact))
-            {
-                throw new ContactAlreadyExistsException("Contact already exists.");
-            }
-            else
-            {
-                contactList.Add(contact);
-                Console.WriteLine("Contact added successfully.");
-            }*/
-            bool isDuplicate = false;
-            foreach (Contact existingContact in contactList)
-            {
-                if (existingContact.phone == phone)
-                {
-                    isDuplicate = true;
-                    break;
-                }
-            }
+
+            bool isDuplicate = contactList.Any(existingContact => existingContact.Phone == phone);
+
             if (!isDuplicate)
             {
                 contactList.Add(contact);
-                Console.WriteLine("Contact added..");
+                return true;
             }
             else
             {
-                throw new ContactAlreadyExistsException("duplicate contact");
+                throw new ContactAlreadyExistsException("Duplicate contact");
             }
         }
 
-
-        public void Display()
+        
+        
+      
+        public List<Contact> Display()
         {
             if (contactList.Count == 0)
             {
                 throw new EmptyContactListException("Contact list is empty.");
             }
-            foreach (Contact contacts in contactList)
-            {
-                Console.WriteLine(contacts);
-            }
+            return contactList;
         }
 
-        public void delete()
+        public bool Delete()
         {
             Console.WriteLine("Enter name of the contact to be deleted : ");
             string? inputString = Console.ReadLine();
-            for (int i = 0; i < contactList.Count; i++)
+
+            Contact contactToRemove = contactList.FirstOrDefault(contact => contact.Name == inputString);
+
+            if (contactToRemove != null)
             {
-                Contact contact = contactList[i];
-                if (inputString == contact.name)
-                {
-                    contactList.Remove(contact);
-                    Console.WriteLine("Contact deleted suceefully");
-                    return;
-                }
+                contactList.Remove(contactToRemove);
+                return true;
             }
-            Console.WriteLine("contact not found in addressbook");
+
+            return false;
         }
 
-        public void Edit()
+
+        public bool Edit()
         {
             Console.WriteLine("Enter name of the contact:");
-            string input = Console.ReadLine();
+            string? input = Console.ReadLine();
 
             for (int i = 0; i < contactList.Count; i++)
             {
                 Contact contact = contactList[i];
 
-                if (input == contact.name)
+                if (input == contact.Name)
                 {
                     Console.WriteLine("Enter name:");
-                    string name = Console.ReadLine();
+                    string? name = Console.ReadLine();
 
                     Console.WriteLine("Enter email:");
-                    string email = Console.ReadLine();
+                    string? email = Console.ReadLine();
 
                     Console.WriteLine("Enter phone:");
-                    string phone = Console.ReadLine();
+                    string? phone = Console.ReadLine();
 
                     Console.WriteLine("Enter state:");
-                    string state = Console.ReadLine();
+                    string? state = Console.ReadLine();
 
                     Console.WriteLine("Enter city:");
-                    string city = Console.ReadLine();
+                    string? city = Console.ReadLine();
 
                     Console.WriteLine("Enter zip:");
-                    string zip = Console.ReadLine();
+                    string? zip = Console.ReadLine();
 
                     Contact updatedContact = new Contact(name, email, phone, state, city, zip);
 
@@ -121,24 +106,22 @@ namespace AddressBook
                     }
                     else
                     {
-                        contact.name = name;
-                        contact.email = email;
-                        contact.phone = phone;
-                        contact.state = state;
-                        contact.city = city;
-                        contact.zipcode = zip;
-                        Console.WriteLine("Contact updated successfully.");
+                        contact.Name = name;
+                        contact.Email = email;
+                        contact.Phone = phone;
+                        contact.State = state;
+                        contact.City = city;
+                        contact.ZipCode = zip;
+                        return true;
                     }
 
-                    return;
+                    
                 }
             }
 
-            Console.WriteLine("Contact not found in address book.");
+            return false;
         }
 
-    
 
-    
     }
 }

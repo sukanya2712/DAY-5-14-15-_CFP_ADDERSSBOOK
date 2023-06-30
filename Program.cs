@@ -26,16 +26,47 @@
                         switch (Choice)
                         {
                             case 1:
-                                addressBook.addContact();
+                                bool contactAdded = addressBook.AddContact();
+                                if (contactAdded)
+                                {
+                                    Console.WriteLine("Contact added successfully.");
+                                }
                                 break;
                             case 2:
-                                addressBook.Display();
+                                List<Contact> contacts = addressBook.Display();
+                                if (contacts.Count > 0)
+                                {
+                                    foreach (Contact contact in contacts)
+                                    {
+                                        Console.WriteLine(contact);
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Contact list is empty.");
+                                }
                                 break;
                             case 3:
-                                addressBook.delete();
+                                bool contactDeleted = addressBook.Delete();
+                                if (contactDeleted)
+                                {
+                                    Console.WriteLine("Contact deleted successfully.");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Contact not found");
+                                }
                                 break;
                             case 4:
-                                addressBook.Edit();
+                                bool contactEdited = addressBook.Edit();
+                                if (contactEdited)
+                                {
+                                    Console.WriteLine("Contact edited successfully.");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Contact not found");
+                                }
                                 break;
                             case 9:
                                 Environment.Exit(0);
