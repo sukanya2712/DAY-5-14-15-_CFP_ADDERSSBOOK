@@ -12,29 +12,30 @@ namespace AddressBook
 {
     public class Contact
     {
-        public string Name;
-        public string Email;
-        public string Phone;
-        public string State;
-        public string City;
-        public string ZipCode;
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public string State { get; set; }
+        public string City { get; set; }
+        public string ZipCode { get; set; }
 
-        public Contact(string name, string email, string phone, string state, string city, string ZipCode)
+
+        public Contact(string Name, string Email, string Phone, string State, string City, string ZipCode)
         {
-            if (!IsValidEmail(email))
+            if (!IsValidEmail(Email))
                 throw new ArgumentException(" Invalid email address");
 
-            if (!IsValidPhone(phone))
+            if (!IsValidPhone(Phone))
                 throw new ArgumentException(" Invalid phone number");
 
             if (!IsValidZipcode(ZipCode))
                 throw new ArgumentException(" Invalid ZIP code");
 
-            this.Name = name;
-            this.Email = email;
-            this.Phone = phone;
-            this.State = state;
-            this.City = city;
+            this.Name = Name;
+            this.Email = Email;
+            this.Phone = Phone;
+            this.State = State;
+            this.City = City;
             this.ZipCode = ZipCode;
         }
 

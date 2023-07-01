@@ -13,3 +13,5 @@ C:\Users\Sukanay\source\repos\AddressBook\AddressBook\obj\Debug\net6.0\refint\Ad
 C:\Users\Sukanay\source\repos\AddressBook\AddressBook\obj\Debug\net6.0\AddressBook.pdb
 C:\Users\Sukanay\source\repos\AddressBook\AddressBook\obj\Debug\net6.0\AddressBook.genruntimeconfig.cache
 C:\Users\Sukanay\source\repos\AddressBook\AddressBook\obj\Debug\net6.0\ref\AddressBook.dll
+C:\Users\Sukanay\source\repos\AddressBook\AddressBook\bin\Debug\net6.0\CsvHelper.dll
+C:\Users\Sukanay\source\repos\AddressBook\AddressBook\obj\Debug\net6.0\AddressBook.csproj.CopyComplete
