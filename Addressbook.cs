@@ -9,7 +9,14 @@ namespace AddressBook
 {
     internal class Addressbook
     {
+        private const string FilePath = "C:\\Users\\Sukanay\\Desktop\\addressbookfileio.txt";
+
         List<Contact> contactList = new List<Contact>();
+
+        public Addressbook()
+        {
+            contactList = LoadContactsFromFile();
+        }
 
         public bool AddContact()
         {
@@ -32,6 +39,7 @@ namespace AddressBook
             if (!isDuplicate)
             {
                 contactList.Add(contact);
+                SaveContactsToFile();
                 return true;
             }
             else
@@ -45,6 +53,7 @@ namespace AddressBook
       
         public List<Contact> Display()
         {
+            contactList = LoadContactsFromFile();
             if (contactList.Count == 0)
             {
                 throw new EmptyContactListException("Contact list is empty.");
@@ -62,6 +71,7 @@ namespace AddressBook
             if (contactToRemove != null)
             {
                 contactList.Remove(contactToRemove);
+                SaveContactsToFile();
                 return true;
             }
 
@@ -112,6 +122,7 @@ namespace AddressBook
                         contact.State = state;
                         contact.City = city;
                         contact.ZipCode = zip;
+                        SaveContactsToFile();
                         return true;
                     }
 
@@ -122,6 +133,48 @@ namespace AddressBook
             return false;
         }
 
+
+        private void SaveContactsToFile()
+        {
+            using (StreamWriter writer = new StreamWriter(FilePath))
+            {
+                foreach (Contact contact in contactList)
+                {
+                    writer.WriteLine($"{contact.Name},{contact.Email},{contact.Phone},{contact.State},{contact.City},{contact.ZipCode}");
+                }
+            }
+        }
+
+        private List<Contact> LoadContactsFromFile()
+        {
+            List<Contact> contacts = new List<Contact>();
+
+            if (File.Exists(FilePath))
+            {
+                using (StreamReader reader = new StreamReader(FilePath))
+                {
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        string[] values = line.Split(',');
+
+                        if (values.Length == 6)
+                        {
+                            string name = values[0];
+                            string email = values[1];
+                            string phone = values[2];
+                            string state = values[3];
+                            string city = values[4];
+                            string zip = values[5];
+
+                            contacts.Add(new Contact(name, email, phone, state, city, zip));
+                        }
+                    }
+                }
+            }
+
+            return contacts;
+        }
 
     }
 }
