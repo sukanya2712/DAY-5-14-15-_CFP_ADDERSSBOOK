@@ -9,11 +9,15 @@ using System.Threading.Tasks;
 using CsvHelper;
 using System.IO;
 
+
+
+using Newtonsoft.Json;
+
 namespace AddressBook
 {
     internal class Addressbook
     {
-        private const string FilePath = "C:\\Users\\Sukanay\\Desktop\\address.csv";
+        private const string FilePath = "C:\\Users\\Sukanay\\Desktop\\addresss.json";
 
         List<Contact> contactList = new List<Contact>();
 
@@ -133,26 +137,26 @@ namespace AddressBook
 
         private void SaveContactsToFile()
         {
-            using (var writer = new StreamWriter(FilePath))
-            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            JsonSerializerSettings settings = new JsonSerializerSettings
             {
-                csv.WriteRecords(contactList);
-            }
+                Formatting = Formatting.Indented
+            };
+
+            string json = JsonConvert.SerializeObject(contactList, settings);
+            File.WriteAllText(FilePath, json);
         }
 
         private List<Contact> LoadContactsFromFile()
         {
             if (File.Exists(FilePath))
             {
-                using (var reader = new StreamReader(FilePath))
-                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-                {
-                    var contacts = csv.GetRecords<Contact>().ToList();
-                    return contacts;
-                }
+                string json = File.ReadAllText(FilePath);
+                var contacts = JsonConvert.DeserializeObject<List<Contact>>(json);
+                return contacts ?? new List<Contact>();
             }
 
             return new List<Contact>();
         }
+
     }
 }
